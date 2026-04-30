@@ -60,10 +60,10 @@ function OrbStage() {
           alt="DEY Marketing"
           style={{
             width: '100%',
-            maxWidth: 520,
-            borderRadius: 24,
+            maxWidth: 680,
             display: 'block',
-            filter: 'drop-shadow(0 30px 60px rgba(58,38,18,0.25))',
+            WebkitMaskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 100%)',
+            maskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 100%)',
           }}
         />
       </div>
