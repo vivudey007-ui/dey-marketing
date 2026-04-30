@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +30,8 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
+    await supabase.from('leads').insert({ name, email, message });
+
     await makeTransport().sendMail({
       from: `"DEY Marketing Site" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
