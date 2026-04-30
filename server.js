@@ -38,8 +38,9 @@ app.post('/api/contact', async (req, res) => {
     if (supabase) {
       await supabase.from('leads').insert({ name, email, message });
     }
+    res.json({ success: true });
 
-    await makeTransport().sendMail({
+    makeTransport().sendMail({
       from: `"DEY Marketing Site" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
@@ -57,10 +58,9 @@ app.post('/api/contact', async (req, res) => {
           <p style="margin-top:24px;font-size:12px;color:#aaa">Reply directly to this email to respond to ${name}.</p>
         </div>
       `,
-    });
-    res.json({ success: true });
+    }).catch(err => console.error('Contact email error:', err.message));
   } catch (err) {
-    console.error('Contact email error:', err.message);
+    console.error('Contact form error:', err.message);
     res.status(500).json({ error: 'Failed to send. Please try WhatsApp.' });
   }
 });
