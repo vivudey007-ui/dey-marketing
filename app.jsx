@@ -22,33 +22,50 @@ function useReveal() {
   });
 }
 
-// ---------- 3D Orb Stage ----------
+// ---------- Design Hero (replaces orb) ----------
 function OrbStage() {
   const ref = useRef(null);
   useEffect(() => {
+    let mouseX = 0, mouseY = 0;
     const onMove = (e) => {
       if (!ref.current) return;
-      const r = ref.current.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      const dx = (e.clientX - cx) / window.innerWidth;
-      const dy = (e.clientY - cy) / window.innerHeight;
-      ref.current.style.transform = `rotateY(${dx * 12}deg) rotateX(${-dy * 10}deg)`;
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 14;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * -10;
+      const scrollY = window.scrollY;
+      ref.current.style.transform = `translateY(${-scrollY * 0.13}px) rotateY(${mouseX}deg) rotateX(${mouseY}deg)`;
+    };
+    const onScroll = () => {
+      if (!ref.current) return;
+      const scrollY = window.scrollY;
+      ref.current.style.transform = `translateY(${-scrollY * 0.13}px) rotateY(${mouseX}deg) rotateX(${mouseY}deg)`;
     };
     window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
   return (
-    <div className="orb-stage">
-      <div className="orb" ref={ref}>
-        <div className="orb-ring orb-ring-2"></div>
-        <div className="orb-main"></div>
-        <div className="orb-torus"></div>
-        <div className="orb-ring orb-ring-1"></div>
-        <div className="orb-ring orb-ring-3"></div>
-        <div className="orb-satellite orb-sat-1"></div>
-        <div className="orb-satellite orb-sat-2"></div>
-        <div className="orb-satellite orb-sat-3"></div>
+    <div className="orb-stage" style={{ perspective: '1000px', overflow: 'visible' }}>
+      <div ref={ref} style={{
+        willChange: 'transform',
+        transition: 'transform 0.12s ease-out',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <img
+          src="assets/design-hero.png"
+          alt="DEY Marketing"
+          style={{
+            width: '100%',
+            maxWidth: 520,
+            borderRadius: 24,
+            display: 'block',
+            filter: 'drop-shadow(0 30px 60px rgba(58,38,18,0.25))',
+          }}
+        />
       </div>
     </div>
   );
@@ -97,7 +114,7 @@ function Nav({ page, onNav }) {
     <>
       <nav className="nav">
         <div className="nav-logo" onClick={() => onNav('home')}>
-          <span className="nav-logo-mark"></span>
+          <img src="assets/dey-logo.png" alt="DEY Marketing Logo" style={{ height: 38, width: 38, objectFit: 'contain', borderRadius: 8 }} />
           <span>DEY <em style={{ fontStyle: 'italic', color: '#8d7048' }}>Marketing</em></span>
         </div>
         <div className="nav-links">
