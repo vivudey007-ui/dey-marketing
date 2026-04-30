@@ -4,7 +4,12 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+let supabase = null;
+if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
+  supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+} else {
+  console.warn('SUPABASE_URL or SUPABASE_ANON_KEY not set — Supabase integration disabled');
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,7 +35,9 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    await supabase.from('leads').insert({ name, email, message });
+    if (supabase) {
+      await supabase.from('leads').insert({ name, email, message });
+    }
 
     await makeTransport().sendMail({
       from: `"DEY Marketing Site" <${process.env.EMAIL_USER}>`,
