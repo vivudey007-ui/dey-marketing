@@ -22,22 +22,21 @@ function useReveal() {
   });
 }
 
-// ---------- Design Hero (replaces orb) ----------
-function OrbStage() {
+// ---------- Hero Background Image ----------
+function HeroBg() {
   const ref = useRef(null);
   useEffect(() => {
-    let mouseX = 0, mouseY = 0;
+    let mx = 0, my = 0;
     const onMove = (e) => {
-      if (!ref.current) return;
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 14;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * -10;
-      const scrollY = window.scrollY;
-      ref.current.style.transform = `translateY(${-scrollY * 0.13}px) rotateY(${mouseX}deg) rotateX(${mouseY}deg)`;
+      mx = (e.clientX / window.innerWidth - 0.5) * 18;
+      my = (e.clientY / window.innerHeight - 0.5) * -12;
+      apply();
     };
-    const onScroll = () => {
+    const onScroll = () => apply();
+    const apply = () => {
       if (!ref.current) return;
-      const scrollY = window.scrollY;
-      ref.current.style.transform = `translateY(${-scrollY * 0.13}px) rotateY(${mouseX}deg) rotateX(${mouseY}deg)`;
+      const sy = window.scrollY;
+      ref.current.style.transform = `translateY(${sy * 0.35}px) rotateY(${mx}deg) rotateX(${my}deg)`;
     };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -47,29 +46,30 @@ function OrbStage() {
     };
   }, []);
   return (
-    <div className="orb-stage" style={{ perspective: '1000px', overflow: 'visible' }}>
-      <div ref={ref} style={{
-        willChange: 'transform',
-        transition: 'transform 0.12s ease-out',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <img
-          src="assets/design-hero.png"
-          alt="DEY Marketing"
-          style={{
-            width: '100%',
-            maxWidth: 680,
-            display: 'block',
-            WebkitMaskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 100%)',
-            maskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 100%)',
-          }}
-        />
-      </div>
+    <div style={{
+      position: 'absolute', inset: 0, overflow: 'hidden',
+      perspective: '1200px', zIndex: 0, pointerEvents: 'none',
+    }}>
+      <img
+        ref={ref}
+        src="assets/design-hero.png"
+        alt=""
+        style={{
+          position: 'absolute',
+          right: '-8%', top: '-12%',
+          width: '72%', height: '130%',
+          objectFit: 'cover',
+          willChange: 'transform',
+          transition: 'transform 0.14s ease-out',
+          WebkitMaskImage: 'radial-gradient(ellipse 78% 75% at 62% 48%, black 30%, transparent 85%)',
+          maskImage: 'radial-gradient(ellipse 78% 75% at 62% 48%, black 30%, transparent 85%)',
+        }}
+      />
     </div>
   );
 }
+
+function OrbStage() { return null; }
 
 // ---------- Counter ----------
 function Counter({ to, suffix = '', prefix = '', duration = 1800 }) {
@@ -202,8 +202,13 @@ function Home({ onNav }) {
   useReveal();
   return (
     <div className="page">
-      <section className="hero">
-        <div className="container">
+      <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
+        <HeroBg />
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+          background: 'linear-gradient(to right, var(--bg) 38%, rgba(250,248,245,0.55) 65%, transparent 100%)',
+        }} />
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="hero-grid">
             <div>
               <div className="eyebrow reveal in">Performance Ads Agency</div>
