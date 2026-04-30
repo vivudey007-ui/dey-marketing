@@ -36,7 +36,9 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     if (supabase) {
-      await supabase.from('leads').insert({ name, email, message });
+      const { error: sbError } = await supabase.from('leads').insert({ name, email, message });
+      if (sbError) console.error('Supabase insert error:', sbError.message);
+      else console.log('Supabase lead saved:', email);
     }
     res.json({ success: true });
 
