@@ -182,10 +182,8 @@ function Footer({ onNav }) {
           </div>
           <div className="footer-col">
             <h5>Connect</h5>
-            <a>Instagram</a>
-            <a>LinkedIn</a>
-            <a>X / Twitter</a>
-            <a>hello@deymarketing.com</a>
+            <a href="https://instagram.com/deymarketing" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="mailto:deymarketing99@gmail.com">deymarketing99@gmail.com</a>
           </div>
         </div>
         <div className="footer-bottom">
