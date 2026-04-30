@@ -6,10 +6,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 let supabase = null;
 if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
-  console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
-  console.log('SUPABASE_ANON_KEY (first 20):', process.env.SUPABASE_ANON_KEY.slice(0, 20));
-  console.log('SUPABASE_ANON_KEY (last 10):', process.env.SUPABASE_ANON_KEY.slice(-10));
-  supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 } else {
   console.warn('SUPABASE_URL or SUPABASE_ANON_KEY not set — Supabase integration disabled');
 }
