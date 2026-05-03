@@ -1,12 +1,17 @@
+[variables]
+BASE_PATH = "/"
+PORT = "3000"
+NODE_ENV = "production"
+
 [phases.setup]
 nixPkgs = ["nodejs_20"]
-cmds = ["npm install -g pnpm"]
+cmds = ["corepack enable"]
 
 [phases.install]
-cmds = ["pnpm install"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
 cmds = ["pnpm --filter @workspace/dey-marketing run build"]
 
 [start]
-cmd = "npx serve -s artifacts/dey-marketing/dist -l $PORT"
+cmd = "npx serve artifacts/dey-marketing/dist/public -s -l $PORT"
