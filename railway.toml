@@ -1,0 +1,10 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @workspace/dey-marketing run build"
+
+[deploy]
+startCommand = "npx serve artifacts/dey-marketing/dist/public -s -l $PORT"
+
+[[deploy.environmentVariables]]
+name = "BASE_PATH"
+value = "/"
