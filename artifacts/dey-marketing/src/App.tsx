@@ -339,34 +339,6 @@ function Home({ onNav }: { onNav: (p: string) => void }) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="depth-layer" style={{ paddingTop: 60 }}>
-        <div className="container">
-          <div className="section-head reveal">
-            <div className="eyebrow">Client Words</div>
-            <h2 style={{ marginTop: 18 }}>Results that <em>speak louder</em> than promises.</h2>
-          </div>
-          <div className="testimonials-row">
-            {[
-              { q: 'DEY rebuilt our acquisition engine from the ground up. ROAS jumped in three months — the system they built still runs itself.', n: 'Aanya Mehra', r: 'Founder · Loom & Linen', a: 'A' },
-              { q: "They obsess over numbers the way we obsess over product. That's rare. That's why we stayed.", n: 'Vikram Shah', r: 'CMO · Verde Wellness', a: 'V' },
-              { q: 'The first agency that actually understood our margin structure before suggesting spend.', n: 'Priya Nair', r: 'Director · Saanvi Studios', a: 'P' },
-            ].map((t, i) => (
-              <div key={i} className="testimonial reveal tilt-card"
-                onMouseMove={tilt} onMouseLeave={resetTilt}
-                style={{ transitionProperty: 'transform', transitionDuration: '0.55s', transitionTimingFunction: 'cubic-bezier(0.22,1,0.36,1)' }}>
-                <div className="quote-mark">"</div>
-                <blockquote>{t.q}</blockquote>
-                <div className="author">
-                  <div className="avatar">{t.a}</div>
-                  <div className="who"><strong>{t.n}</strong><span>{t.r}</span></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="depth-layer" style={{ padding: '40px 0 0' }}>
         <div className="container">
