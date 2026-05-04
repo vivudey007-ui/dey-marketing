@@ -1,24 +1,2145 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DEY Marketing — Performance Ads Agency</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DEY Marketing — Premium Ads Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --beige: #F5F0E8;
+    --beige2: #EDE5D8;
+    --beige3: #E0D5C5;
+    --gold: #C9A96E;
+    --gold-light: #DFC08A;
+    --brown: #6B4F3A;
+    --brown-dark: #3D2B1F;
+    --text: #2C1F14;
+    --text-muted: #7A6555;
+    --white: #FDFAF5;
+    --card-bg: rgba(255,252,245,0.8);
+    --shadow: 0 8px 40px rgba(107,79,58,0.10);
+    --shadow-sm: 0 2px 12px rgba(107,79,58,0.08);
+    --radius: 14px;
+    --radius-lg: 24px;
+    --transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--beige);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ───── PAGE SYSTEM ───── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ───── GRAIN OVERLAY ───── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* ───── NAVBAR ───── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px;
+    height: 72px;
+    background: rgba(245,240,232,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,169,110,0.18);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--brown-dark);
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13.5px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .nav-links a:hover { color: var(--brown-dark); }
+
+  .btn-nav {
+    background: var(--brown-dark);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.8px;
+    transition: var(--transition) !important;
+  }
+
+  .btn-nav:hover {
+    background: var(--gold) !important;
+    color: var(--brown-dark) !important;
+    transform: translateY(-1px);
+  }
+
+  /* ───── BUTTONS ───── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--brown-dark);
+    color: var(--white);
+    padding: 15px 34px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(61,43,31,0.2);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold);
+    color: var(--brown-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,169,110,0.35);
+  }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--brown-dark);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border: 1.5px solid rgba(107,79,58,0.3);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  /* ───── SECTION COMMON ───── */
+  section { position: relative; z-index: 1; }
+
+  .section-label {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.15; }
+
+  /* ───── HOME: HERO ───── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 60px 80px;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige2) 50%, var(--beige3) 100%);
+    position: relative; overflow: hidden;
+  }
+
+  .hero-content {
+    max-width: 580px;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero h1 {
+    font-size: clamp(46px, 5.5vw, 72px);
+    color: var(--brown-dark);
+    line-height: 1.1;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 44px;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .hero-visual {
+    position: absolute;
+    right: 60px; top: 50%;
+    transform: translateY(-50%);
+    width: 420px; height: 420px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .hero-visual svg { width: 100%; height: 100%; }
+
+  /* ───── SOCIAL PROOF ───── */
+  .social-proof {
+    padding: 80px 60px;
+    background: var(--brown-dark);
+    text-align: center;
+  }
+
+  .social-proof .section-label { color: var(--gold-light); }
+
+  .social-proof p.intro {
+    color: rgba(253,250,245,0.5);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .metrics {
+    display: flex; justify-content: center; gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .metric-item { text-align: center; }
+
+  .metric-item .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+  }
+
+  .metric-item .label {
+    font-size: 12.5px;
+    color: rgba(253,250,245,0.5);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ───── SERVICES PREVIEW ───── */
+  .services-preview {
+    padding: 120px 60px;
+    background: var(--white);
+  }
+
+  .services-header { margin-bottom: 72px; }
+
+  .services-header h2 {
+    font-size: clamp(38px, 4vw, 58px);
+    color: var(--brown-dark);
+    max-width: 500px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--beige);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    border: 1px solid rgba(201,169,110,0.15);
+    transition: var(--transition);
+    position: relative; overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold) 0%, transparent 60%);
+    opacity: 0;
+    transition: var(--transition);
+  }
+
+  .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .service-card:hover::before { opacity: 0.04; }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    background: var(--brown-dark);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    font-size: 20px;
+  }
+
+  .service-card h3 {
+    font-size: 22px;
+    color: var(--brown-dark);
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .link-arrow {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: var(--transition);
+    background: none; border: none;
+  }
+
+  .link-arrow:hover { gap: 10px; }
+
+  /* ───── PROCESS ───── */
+  .process {
+    padding: 120px 60px;
+    background: linear-gradient(180deg, var(--beige2) 0%, var(--beige) 100%);
+  }
+
+  .process-header { text-align: center; margin-bottom: 80px; }
+  .process-header h2 { font-size: clamp(36px, 4vw, 56px); color: var(--brown-dark); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    max-width: 900px; margin: 0 auto;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 12.5%; right: 12.5%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .step {
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--brown-dark);
+    color: var(--gold-light);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    position: relative; z-index: 1;
+  }
+
+  .step h3 {
+    font-size: 20px; color: var(--brown-dark);
+    margin-bottom: 10px;
+  }
+
+  .step p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ───── TESTIMONIALS ───── */
+  .testimonials {
+    padding: 120px 60px;
+    background: var(--white);
+  }
+
+  .testimonials-header { text-align: center; margin-bottom: 72px; }
+  .testimonials-header h2 { font-size: clamp(36px, 4vw, 54px); color: var(--brown-dark); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1000px; margin: 0 auto;
+  }
+
+  .testi-card {
+    background: var(--beige);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    border: 1px solid rgba(201,169,110,0.12);
+    position: relative;
+  }
+
+  .testi-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.25;
+    position: absolute;
+    top: 16px; left: 28px;
+    line-height: 1;
+  }
+
+  .testi-card p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 28px;
+    padding-top: 20px;
+  }
+
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+
+  .testi-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--brown));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+  }
+
+  .testi-name { font-size: 14px; font-weight: 500; color: var(--brown-dark); }
+  .testi-role { font-size: 12px; color: var(--text-muted); }
+
+  /* ───── FINAL CTA ───── */
+  .final-cta {
+    padding: 160px 60px;
+    background: var(--brown-dark);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: 'DEY';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 600;
+    color: rgba(201,169,110,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 20px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(40px, 5vw, 68px);
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .final-cta h2 em { color: var(--gold-light); font-style: italic; }
+  .final-cta p { color: rgba(253,250,245,0.5); font-size: 16px; margin-bottom: 44px; }
+
+  /* ───── SERVICES PAGE ───── */
+  .page-hero {
+    padding: 160px 60px 80px;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige3) 100%);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(44px, 5vw, 68px);
+    color: var(--brown-dark);
+    max-width: 600px;
+  }
+
+  .page-hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-top: 20px;
+  }
+
+  .service-full {
+    padding: 100px 60px;
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .service-full:nth-child(even) { background: var(--white); }
+  .service-full:nth-child(odd) { background: var(--beige); }
+  .service-full:nth-child(even) .service-full-content { order: 2; }
+  .service-full:nth-child(even) .service-full-visual { order: 1; }
+
+  .service-full-content .section-label { margin-bottom: 12px; }
+
+  .service-full-content h2 {
+    font-size: clamp(30px, 3vw, 44px);
+    color: var(--brown-dark);
+    margin-bottom: 20px;
+  }
+
+  .service-full-content p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .service-bullets {
+    list-style: none;
+    margin-bottom: 36px;
+  }
+
+  .service-bullets li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .service-bullets li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .service-full-visual {
+    background: var(--beige3);
+    border-radius: var(--radius-lg);
+    height: 340px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .service-full-visual svg { width: 80%; height: 80%; }
+
+  /* ───── ABOUT PAGE ───── */
+  .about-intro {
+    padding: 160px 60px 100px;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige2) 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-intro h1 {
+    font-size: clamp(42px, 5vw, 66px);
+    color: var(--brown-dark);
+    margin-bottom: 24px;
+  }
+
+  .about-intro h1 em { color: var(--gold); }
+
+  .about-intro p {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: 20px;
+  }
+
+  .about-diff {
+    padding: 100px 60px;
+    background: var(--brown-dark);
+  }
+
+  .about-diff h2 {
+    font-size: clamp(34px, 4vw, 52px);
+    color: var(--white);
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .about-diff h2 em { color: var(--gold-light); font-style: italic; }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .diff-card {
+    background: rgba(255,252,245,0.05);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    transition: var(--transition);
+  }
+
+  .diff-card:hover {
+    background: rgba(201,169,110,0.08);
+    transform: translateY(-4px);
+  }
+
+  .diff-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .diff-card h3 {
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .diff-card p { font-size: 13.5px; color: rgba(253,250,245,0.5); line-height: 1.7; }
+
+  /* ───── CONTACT PAGE ───── */
+  .contact-section {
+    padding: 160px 60px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige2) 100%);
+  }
+
+  .contact-left h1 {
+    font-size: clamp(40px, 4.5vw, 60px);
+    color: var(--brown-dark);
+    margin-bottom: 20px;
+  }
+
+  .contact-left h1 em { color: var(--gold); font-style: italic; }
+
+  .contact-left p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .contact-info-item {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .contact-info-item .icon {
+    width: 36px; height: 36px;
+    background: var(--brown-dark);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .contact-form {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 52px 44px;
+    box-shadow: var(--shadow);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .form-group { margin-bottom: 22px; }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--beige);
+    border: 1.5px solid rgba(201,169,110,0.2);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: var(--transition);
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 110px; }
+
+  .form-note {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+
+  /* ───── APPOINTMENTS PAGE ───── */
+  .appt-section {
+    padding: 160px 60px 100px;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige2) 100%);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .appt-left h1 {
+    font-size: clamp(40px, 4.5vw, 60px);
+    color: var(--brown-dark);
+    margin-bottom: 20px;
+  }
+
+  .appt-left h1 em { color: var(--gold); font-style: italic; }
+  .appt-left p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 40px; }
+
+  .appt-bullets { list-style: none; }
+
+  .appt-bullets li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .appt-bullets li .bul-icon {
+    width: 32px; height: 32px;
+    background: rgba(61,43,31,0.07);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .calendly-placeholder {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 0;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    min-height: 580px;
+    display: flex; flex-direction: column;
+  }
+
+  .cal-header {
+    background: var(--brown-dark);
+    padding: 36px 40px;
+  }
+
+  .cal-header h3 {
+    color: var(--white);
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .cal-header p { color: rgba(253,250,245,0.5); font-size: 13.5px; }
+
+  .cal-body { padding: 36px 40px; flex: 1; }
+
+  .cal-month-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .cal-month-nav span { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown-dark); }
+
+  .cal-nav-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(201,169,110,0.25);
+    background: none; cursor: pointer;
+    font-size: 16px; color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+
+  .cal-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .cal-grid-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .cal-grid-header span {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+
+  .cal-day {
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .cal-day:hover:not(.empty):not(.past) { background: rgba(201,169,110,0.15); color: var(--brown-dark); }
+  .cal-day.available { color: var(--brown-dark); }
+  .cal-day.selected { background: var(--brown-dark); color: var(--white); }
+  .cal-day.past { opacity: 0.3; cursor: default; }
+  .cal-day.empty { cursor: default; }
+
+  .cal-times h4 { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; font-weight: 500; }
+
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .time-slot {
+    padding: 10px 8px;
+    border: 1.5px solid rgba(201,169,110,0.2);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .time-slot:hover { border-color: var(--gold); color: var(--gold); }
+  .time-slot.selected { background: var(--brown-dark); border-color: var(--brown-dark); color: var(--white); }
+
+  .cal-confirm {
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: var(--brown-dark);
+    padding: 72px 60px 40px;
+    border-top: 1px solid rgba(201,169,110,0.1);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  .footer-brand .nav-logo { color: var(--white); font-size: 24px; margin-bottom: 16px; display: block; }
+
+  .footer-brand p {
+    font-size: 13.5px;
+    color: rgba(253,250,245,0.4);
+    line-height: 1.8;
+    max-width: 240px;
+  }
+
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li {
+    margin-bottom: 12px;
+  }
+
+  .footer-col ul li a {
+    font-size: 14px;
+    color: rgba(253,250,245,0.45);
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .footer-col ul li a:hover { color: var(--gold-light); }
+
+  .socials { display: flex; gap: 12px; margin-top: 8px; }
+
+  .social-link {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1px solid rgba(201,169,110,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(253,250,245,0.45);
+    font-size: 15px;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid rgba(201,169,110,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-bottom p { font-size: 12.5px; color: rgba(253,250,245,0.3); }
+
+  /* ───── ANIMATIONS ───── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) translateY(0); }
+    50% { transform: translateY(-50%) translateY(-20px); }
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ───── MORNING BRIEFING ───── */
+  .morning-page {
+    min-height: 100vh;
+    background: var(--brown-dark);
+    padding: 100px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .morning-page::before {
+    content: 'DEY';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    font-weight: 600;
+    color: rgba(201,169,110,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 20px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .morning-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+
+  .morning-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 56px;
+  }
+
+  .morning-greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    color: var(--white);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .morning-greeting em { color: var(--gold-light); font-style: italic; }
+
+  .morning-date {
+    text-align: right;
+  }
+
+  .morning-date .day {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .morning-date .full-date {
+    font-size: 13px;
+    color: rgba(253,250,245,0.4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .morning-alert {
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 18px 24px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 48px;
+  }
+
+  .morning-alert .alert-icon { font-size: 20px; }
+
+  .morning-alert p {
+    font-size: 14px;
+    color: rgba(253,250,245,0.75);
+    line-height: 1.6;
+  }
+
+  .morning-alert strong { color: var(--gold-light); }
+
+  .morning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .morning-card {
+    background: rgba(255,252,245,0.05);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 20px;
+    padding: 32px;
+    transition: var(--transition);
+  }
+
+  .morning-card:hover {
+    background: rgba(201,169,110,0.07);
+    transform: translateY(-3px);
+  }
+
+  .morning-card-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .priority-list { list-style: none; }
+
+  .priority-list li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+    font-size: 14px;
+    color: rgba(253,250,245,0.75);
+    line-height: 1.5;
+  }
+
+  .priority-list li:last-child { border-bottom: none; }
+
+  .priority-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: -2px;
+  }
+
+  .priority-list li strong { color: var(--white); display: block; margin-bottom: 2px; font-size: 14px; }
+
+  .status-rows { display: flex; flex-direction: column; gap: 14px; }
+
+  .status-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+  }
+
+  .status-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .status-row .s-label { font-size: 13px; color: rgba(253,250,245,0.5); }
+  .status-row .s-val { font-size: 13px; font-weight: 500; }
+  .s-green { color: #6FCF97; }
+  .s-yellow { color: var(--gold-light); }
+  .s-red { color: #EB5757; }
+
+  .cmd-table { width: 100%; border-collapse: collapse; }
+
+  .cmd-table tr { border-bottom: 1px solid rgba(201,169,110,0.08); }
+  .cmd-table tr:last-child { border-bottom: none; }
+
+  .cmd-table td {
+    padding: 11px 0;
+    font-size: 13.5px;
+    vertical-align: middle;
+  }
+
+  .cmd-table td:first-child {
+    color: rgba(253,250,245,0.5);
+    width: 55%;
+  }
+
+  .cmd-pill {
+    display: inline-block;
+    background: rgba(201,169,110,0.15);
+    color: var(--gold-light);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    font-family: monospace;
+  }
+
+  .morning-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(201,169,110,0.1);
+  }
+
+  .morning-footer p { font-size: 12px; color: rgba(253,250,245,0.3); letter-spacing: 0.5px; }
+
+  @media (max-width: 900px) {
+    .morning-page { padding: 100px 24px 60px; }
+    .morning-top { flex-direction: column; gap: 16px; }
+    .morning-date { text-align: left; }
+    .morning-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 16px; }
+
+    .hero { padding: 120px 24px 80px; }
+    .hero-visual { display: none; }
+
+    .social-proof, .services-preview, .process, .testimonials, .final-cta,
+    .page-hero, .about-diff, .contact-section, .appt-section { padding-left: 24px; padding-right: 24px; }
+
+    .service-full { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    .service-full:nth-child(even) .service-full-content { order: 1; }
+    .service-full:nth-child(even) .service-full-visual { order: 2; }
+
+    .about-intro { grid-template-columns: 1fr; padding: 120px 24px 80px; }
+
+    .diff-grid { grid-template-columns: 1fr; }
+
+    .contact-section, .appt-section { grid-template-columns: 1fr; padding-top: 120px; }
+
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+
+    .metrics { gap: 40px; }
+
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-  <div id="app"></div>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-  <script type="text/babel" src="app.jsx"></script>
-  <!-- Calendly widget -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">DEY <span>Marketing</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('services')">Services</a></li>
+    <li><a onclick="showPage('about')">About</a></li>
+    <li><a onclick="showPage('contact')">Contact</a></li>
+    <li><a onclick="showPage('appointments')">Appointments</a></li>
+    <li><a class="btn-nav" onclick="showPage('appointments')">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════ MORNING BRIEFING PAGE ══════════════════ -->
+<div id="page-morning" class="page active">
+  <section class="morning-page">
+    <div class="morning-inner">
+
+      <div class="morning-top">
+        <div>
+          <h1 class="morning-greeting">Good morning,<br><em>Vivan.</em></h1>
+        </div>
+        <div class="morning-date">
+          <span class="day" id="briefing-day"></span>
+          <span class="full-date" id="briefing-date"></span>
+        </div>
+      </div>
+
+      <div class="morning-alert">
+        <span class="alert-icon">⚡</span>
+        <p><strong>Revenue goal active — May & June 2026.</strong> The system is fully built. This month is about filling the pipeline and getting campaigns live fast. Every new client is direct revenue.</p>
+      </div>
+
+      <div class="morning-grid">
+
+        <div class="morning-card">
+          <span class="morning-card-label">Top 3 Priorities Today</span>
+          <ul class="priority-list">
+            <li>
+              <span class="priority-num">1</span>
+              <div><strong>Get a new client in the door</strong>Target local businesses with bad websites — pitch both ads + site rebuild. Double revenue per client.</div>
+            </li>
+            <li>
+              <span class="priority-num">2</span>
+              <div><strong>Check active campaigns</strong>Run /analyze-meta on any live campaigns. Catch problems early before Monday.</div>
+            </li>
+            <li>
+              <span class="priority-num">3</span>
+              <div><strong>Website upsell audit</strong>Paste a client URL into /audit-website. Every FAIL is a pitch for extra revenue on top of ad fees.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="morning-card">
+          <span class="morning-card-label">System Status</span>
+          <div class="status-rows">
+            <div class="status-row">
+              <span class="s-label">Meta API Token</span>
+              <span class="s-val s-green">Active — expires ~July 2026</span>
+            </div>
+            <div class="status-row">
+              <span class="s-label">Ad Account</span>
+              <span class="s-val s-green">Dey marketing — main</span>
+            </div>
+            <div class="status-row">
+              <span class="s-label">GitHub Repo</span>
+              <span class="s-val s-green">Up to date</span>
+            </div>
+            <div class="status-row">
+              <span class="s-label">Skills ready</span>
+              <span class="s-val s-green">9 / 9 live</span>
+            </div>
+            <div class="status-row">
+              <span class="s-label">Revenue goal</span>
+              <span class="s-val s-yellow">May–June 2026 — active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="morning-card" style="grid-column: 1 / -1;">
+          <span class="morning-card-label">Quick Commands</span>
+          <table class="cmd-table">
+            <tr>
+              <td>New client intake</td>
+              <td><span class="cmd-pill">/new-client</span></td>
+              <td style="width:45%;color:rgba(253,250,245,0.4);font-size:12.5px">Start here for every new client — triggers full workflow</td>
+            </tr>
+            <tr>
+              <td>Audit a client's website</td>
+              <td><span class="cmd-pill">/audit-website</span></td>
+              <td style="color:rgba(253,250,245,0.4);font-size:12.5px">FAIL = pitch a site rebuild at extra charge</td>
+            </tr>
+            <tr>
+              <td>Analyze Meta performance</td>
+              <td><span class="cmd-pill">/analyze-meta</span></td>
+              <td style="color:rgba(253,250,245,0.4);font-size:12.5px">Check live campaigns, catch underperformers</td>
+            </tr>
+            <tr>
+              <td>Build a Meta campaign</td>
+              <td><span class="cmd-pill">/build-campaign-meta</span></td>
+              <td style="color:rgba(253,250,245,0.4);font-size:12.5px">Always launches PAUSED — you activate in Ads Manager</td>
+            </tr>
+            <tr>
+              <td>Build a landing page</td>
+              <td><span class="cmd-pill">/build-website</span></td>
+              <td style="color:rgba(253,250,245,0.4);font-size:12.5px">Saves HTML to ~/Downloads, pushed to GitHub</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="morning-footer">
+        <p>DEY Marketing — Internal Dashboard · Updated daily</p>
+        <a href="https://deymarketing.in" target="_blank" class="btn-primary" style="background:var(--gold);color:var(--brown-dark);padding:12px 28px;font-size:13px">View Agency Site →</a>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════ HOME PAGE ══════════════════ -->
+<div id="page-home" class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="section-label">Performance-Driven Ads Agency</span>
+      <h1>We run <em>high-converting</em> ad campaigns that turn clicks into customers.</h1>
+      <p>At DEY Marketing, we help brands scale profitably using data-driven Meta and Google ad strategies built for sustainable growth.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('appointments')">Book a Strategy Call <span>→</span></button>
+        <button class="btn-secondary" onclick="showPage('services')">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="160" fill="rgba(201,169,110,0.06)" stroke="rgba(201,169,110,0.15)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="110" fill="rgba(201,169,110,0.06)" stroke="rgba(201,169,110,0.12)" stroke-width="1"/>
+        <circle cx="200" cy="200" r="60" fill="rgba(61,43,31,0.08)" stroke="rgba(201,169,110,0.2)" stroke-width="1.5"/>
+        <ellipse cx="200" cy="200" rx="160" ry="55" fill="none" stroke="rgba(201,169,110,0.08)" stroke-width="1" transform="rotate(-25 200 200)"/>
+        <ellipse cx="200" cy="200" rx="160" ry="55" fill="none" stroke="rgba(201,169,110,0.06)" stroke-width="1" transform="rotate(45 200 200)"/>
+        <circle cx="200" cy="40" r="8" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="360" cy="200" r="6" fill="rgba(201,169,110,0.35)"/>
+        <circle cx="200" cy="360" r="10" fill="rgba(61,43,31,0.2)"/>
+        <circle cx="40" cy="200" r="5" fill="rgba(201,169,110,0.25)"/>
+        <text x="200" y="215" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="48" fill="rgba(61,43,31,0.15)" font-weight="300">DEY</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="social-proof fade-in">
+    <p class="intro">Trusted by growing brands</p>
+    <div class="metrics">
+      <div class="metric-item">
+        <span class="num">₹10L+</span>
+        <span class="label">Ad Spend Managed</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">100+</span>
+        <span class="label">Leads Generated</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">3.8×</span>
+        <span class="label">Average ROAS</span>
+      </div>
+      <div class="metric-item">
+        <span class="num">98%</span>
+        <span class="label">Client Retention</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="services-preview">
+    <div class="services-header fade-in">
+      <span class="section-label">What We Do</span>
+      <h2>Services built to scale your revenue.</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">📘</div>
+        <h3>Meta Ads</h3>
+        <p>Facebook & Instagram campaigns engineered to convert cold audiences into paying customers.</p>
+        <button class="link-arrow" onclick="showPage('services')">Learn More →</button>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🔍</div>
+        <h3>Google Ads</h3>
+        <p>Capture high-intent buyers at the exact moment they're searching for what you offer.</p>
+        <button class="link-arrow" onclick="showPage('services')">Learn More →</button>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">⚡</div>
+        <h3>Lead Generation</h3>
+        <p>Consistent, qualified leads delivered to your pipeline — month after month.</p>
+        <button class="link-arrow" onclick="showPage('services')">Learn More →</button>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">📈</div>
+        <h3>E-commerce Scaling</h3>
+        <p>Grow your online store profitably with full-funnel, data-backed ad strategies.</p>
+        <button class="link-arrow" onclick="showPage('services')">Learn More →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="process-header fade-in">
+      <span class="section-label">How It Works</span>
+      <h2>A process built for results.</h2>
+    </div>
+    <div class="process-steps fade-in">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Strategy</h3>
+        <p>Deep dive into your business, audience, and goals to build a bespoke roadmap.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Launch</h3>
+        <p>Precise campaign setup with tested creatives, copy, and targeting structures.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Optimize</h3>
+        <p>Continuous data analysis to cut waste and double down on what converts.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Scale</h3>
+        <p>Systematic budget scaling and expansion to new channels and markets.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials-header fade-in">
+      <span class="section-label">Client Stories</span>
+      <h2>Results speak for themselves.</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card fade-in">
+        <p>DEY Marketing completely transformed our Meta ad performance. Within 60 days, our cost per lead dropped by 40% and we were booking more calls than ever.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rohan Mehta</div>
+            <div class="testi-role">Founder, Fintech Startup</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in">
+        <p>Finally, an agency that talks about ROAS and not just impressions. Our e-commerce store went from 1.8× to 4.2× ROAS in three months. Incredible team.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div>
+            <div class="testi-name">Priya Sharma</div>
+            <div class="testi-role">CEO, D2C Fashion Brand</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in">
+        <p>Their Google Ads setup was surgical. We started appearing for the right searches, and our inbound inquiry quality improved dramatically within weeks.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Arjun Kapoor</div>
+            <div class="testi-role">Director, B2B SaaS Company</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <span class="section-label" style="color:var(--gold)">Ready to grow?</span>
+    <h2>Ready to <em>scale</em> your brand?</h2>
+    <p>Let's build a strategy designed around your goals and your numbers.</p>
+    <button class="btn-primary" onclick="showPage('appointments')" style="background:var(--gold);color:var(--brown-dark);">Book a Call →</button>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo">DEY <span>Marketing</span></span>
+        <p>Premium performance marketing for brands serious about profitable growth.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Meta Ads</a></li>
+          <li><a onclick="showPage('services')">Google Ads</a></li>
+          <li><a onclick="showPage('services')">Lead Generation</a></li>
+          <li><a onclick="showPage('services')">E-commerce Scaling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="socials">
+          <a class="social-link" title="Instagram">in</a>
+          <a class="social-link" title="LinkedIn">Li</a>
+          <a class="social-link" title="Twitter">𝕏</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DEY Marketing. All rights reserved.</p>
+      <p>Made with precision.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════ SERVICES PAGE ══════════════════ -->
+<div id="page-services" class="page">
+  <section class="page-hero">
+    <span class="section-label">Our Services</span>
+    <h1>Everything you need to grow profitably.</h1>
+    <p>Each service is built around one goal: measurable return on your ad spend.</p>
+  </section>
+
+  <div class="service-full fade-in">
+    <div class="service-full-content">
+      <span class="section-label">01 — Meta Ads</span>
+      <h2>We create high-converting campaigns that turn attention into revenue.</h2>
+      <p>Meta's platforms reach over 3 billion people. We make sure the right people see the right message at the right time — and take action.</p>
+      <ul class="service-bullets">
+        <li>Full-funnel campaign architecture (TOFU, MOFU, BOFU)</li>
+        <li>Creative strategy & ad copywriting</li>
+        <li>Audience research & lookalike building</li>
+        <li>Retargeting & cart recovery campaigns</li>
+        <li>Weekly reporting & transparent performance data</li>
+      </ul>
+      <button class="btn-primary" onclick="showPage('appointments')">Get Started →</button>
+    </div>
+    <div class="service-full-visual">
+      <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="40" width="220" height="160" rx="16" fill="rgba(61,43,31,0.05)" stroke="rgba(201,169,110,0.2)" stroke-width="1.5"/>
+        <rect x="60" y="70" width="80" height="8" rx="4" fill="rgba(201,169,110,0.35)"/>
+        <rect x="60" y="86" width="120" height="6" rx="3" fill="rgba(107,79,58,0.15)"/>
+        <rect x="60" y="100" width="96" height="6" rx="3" fill="rgba(107,79,58,0.1)"/>
+        <rect x="60" y="124" width="60" height="28" rx="8" fill="rgba(61,43,31,0.12)"/>
+        <rect x="130" y="124" width="60" height="28" rx="8" fill="rgba(201,169,110,0.25)"/>
+        <circle cx="220" cy="80" r="20" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <text x="220" y="86" text-anchor="middle" fill="rgba(107,79,58,0.5)" font-size="14">f</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="service-full fade-in">
+    <div class="service-full-content">
+      <span class="section-label">02 — Google Ads</span>
+      <h2>Capture high-intent customers actively searching for your business.</h2>
+      <p>Search, Shopping, Display, and YouTube — we manage every Google Ads channel with relentless focus on cost efficiency and conversion.</p>
+      <ul class="service-bullets">
+        <li>Search, Shopping & Display campaign management</li>
+        <li>Keyword research & negative keyword strategy</li>
+        <li>Landing page audit & conversion optimisation</li>
+        <li>Google Analytics & conversion tracking setup</li>
+        <li>Competitor analysis & bid strategy</li>
+      </ul>
+      <button class="btn-primary" onclick="showPage('appointments')">Get Started →</button>
+    </div>
+    <div class="service-full-visual">
+      <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="130" r="70" fill="rgba(201,169,110,0.06)" stroke="rgba(201,169,110,0.18)" stroke-width="1.5"/>
+        <path d="M150 60 L150 200" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
+        <path d="M80 130 L220 130" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
+        <circle cx="150" cy="130" r="8" fill="rgba(61,43,31,0.2)"/>
+        <circle cx="150" cy="60" r="5" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="220" cy="130" r="5" fill="rgba(201,169,110,0.4)"/>
+        <circle cx="108" cy="94" r="4" fill="rgba(201,169,110,0.3)"/>
+        <text x="150" y="136" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(107,79,58,0.4)">G</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="service-full fade-in">
+    <div class="service-full-content">
+      <span class="section-label">03 — Lead Generation</span>
+      <h2>Get consistent, qualified leads for your business.</h2>
+      <p>We build lead generation systems that attract and qualify your ideal clients — so your sales team focuses on closing, not prospecting.</p>
+      <ul class="service-bullets">
+        <li>Lead magnet strategy & creation</li>
+        <li>Landing page design & A/B testing</li>
+        <li>Email capture & CRM integration</li>
+        <li>Lead scoring & qualification frameworks</li>
+        <li>Monthly volume & quality reporting</li>
+      </ul>
+      <button class="btn-primary" onclick="showPage('appointments')">Get Started →</button>
+    </div>
+    <div class="service-full-visual">
+      <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="100" y="50" width="100" height="70" rx="10" fill="rgba(201,169,110,0.1)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <path d="M150 120 L110 160 M150 120 L190 160" stroke="rgba(201,169,110,0.3)" stroke-width="1.5"/>
+        <circle cx="90" cy="175" r="18" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <circle cx="150" cy="175" r="18" fill="rgba(61,43,31,0.1)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <circle cx="210" cy="175" r="18" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <text x="150" y="91" text-anchor="middle" font-family="serif" font-size="22" fill="rgba(201,169,110,0.5)">✦</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="service-full fade-in">
+    <div class="service-full-content">
+      <span class="section-label">04 — E-commerce Scaling</span>
+      <h2>Scale your online store profitably with data-driven strategies.</h2>
+      <p>From first-time purchase to repeat buyer — we manage the full e-commerce customer journey with paid media that compounds your growth.</p>
+      <ul class="service-bullets">
+        <li>Catalogue & Shopping ad management</li>
+        <li>Dynamic retargeting & upsell campaigns</li>
+        <li>ROAS-focused budget allocation</li>
+        <li>Seasonal campaign planning & execution</li>
+        <li>Full-funnel analytics & attribution</li>
+      </ul>
+      <button class="btn-primary" onclick="showPage('appointments')">Get Started →</button>
+    </div>
+    <div class="service-full-visual">
+      <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="150" width="30" height="70" rx="4" fill="rgba(201,169,110,0.2)"/>
+        <rect x="100" y="110" width="30" height="110" rx="4" fill="rgba(201,169,110,0.35)"/>
+        <rect x="150" y="80" width="30" height="140" rx="4" fill="rgba(61,43,31,0.15)"/>
+        <rect x="200" y="50" width="30" height="170" rx="4" fill="rgba(201,169,110,0.5)"/>
+        <path d="M65 148 L115 108 L165 78 L215 48" stroke="rgba(201,169,110,0.6)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <circle cx="215" cy="48" r="5" fill="rgba(201,169,110,0.8)"/>
+      </svg>
+    </div>
+  </div>
+
+  <section class="final-cta">
+    <span class="section-label" style="color:var(--gold)">Let's build together</span>
+    <h2>Not sure which service you <em>need?</em></h2>
+    <p>Book a free strategy call and we'll figure out the best path to growth for your business.</p>
+    <button class="btn-primary" onclick="showPage('appointments')" style="background:var(--gold);color:var(--brown-dark);">Book a Free Call →</button>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo">DEY <span>Marketing</span></span>
+        <p>Premium performance marketing for brands serious about profitable growth.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Meta Ads</a></li>
+          <li><a onclick="showPage('services')">Google Ads</a></li>
+          <li><a onclick="showPage('services')">Lead Generation</a></li>
+          <li><a onclick="showPage('services')">E-commerce Scaling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="socials">
+          <a class="social-link">in</a>
+          <a class="social-link">Li</a>
+          <a class="social-link">𝕏</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DEY Marketing. All rights reserved.</p>
+      <p>Made with precision.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════ ABOUT PAGE ══════════════════ -->
+<div id="page-about" class="page">
+  <section class="about-intro">
+    <div>
+      <span class="section-label">Who We Are</span>
+      <h1>About <em>DEY</em> Marketing</h1>
+      <p>We are a performance-driven advertising agency built for one purpose: growing your revenue through paid media that actually works.</p>
+      <p>Founded by marketers who were tired of agencies chasing vanity metrics, DEY Marketing was built on a different premise — that every rupee you invest in ads should return measurable, compounding value.</p>
+      <p>We work with e-commerce brands, SaaS companies, and service businesses who are ready to scale with discipline and data.</p>
+      <button class="btn-primary" onclick="showPage('appointments')" style="margin-top:16px">Work With Us →</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center">
+      <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px">
+        <rect x="40" y="40" width="300" height="300" rx="32" fill="rgba(201,169,110,0.07)" stroke="rgba(201,169,110,0.15)" stroke-width="1.5"/>
+        <rect x="70" y="70" width="240" height="240" rx="24" fill="rgba(61,43,31,0.04)" stroke="rgba(201,169,110,0.1)" stroke-width="1"/>
+        <text x="190" y="210" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="96" fill="rgba(61,43,31,0.1)" font-weight="300">DEY</text>
+        <circle cx="190" cy="190" r="50" fill="rgba(201,169,110,0.1)" stroke="rgba(201,169,110,0.25)" stroke-width="1.5"/>
+        <circle cx="190" cy="190" r="8" fill="rgba(201,169,110,0.6)"/>
+      </svg>
+    </div>
+  </section>
+
+  <section style="padding:100px 60px;background:var(--white)">
+    <div style="max-width:680px;margin:0 auto;text-align:center">
+      <span class="section-label">Our Mission</span>
+      <h2 style="font-size:clamp(32px,4vw,52px);color:var(--brown-dark);margin-bottom:24px">Help brands grow profitably — without the guesswork.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.85">We believe advertising should be a lever, not a gamble. Every campaign we run is backed by strategy, measured against clear KPIs, and optimised relentlessly until we achieve the results you need.</p>
+    </div>
+  </section>
+
+  <section class="about-diff">
+    <h2>What makes us <em>different.</em></h2>
+    <div class="diff-grid">
+      <div class="diff-card fade-in">
+        <div class="diff-num">01</div>
+        <h3>Data-First Approach</h3>
+        <p>Every decision — from targeting to budget allocation — is driven by real data, not gut feelings or trends.</p>
+      </div>
+      <div class="diff-card fade-in">
+        <div class="diff-num">02</div>
+        <h3>ROI Over Vanity</h3>
+        <p>We don't celebrate impressions or reach. We celebrate cost per lead, ROAS, and revenue growth.</p>
+      </div>
+      <div class="diff-card fade-in">
+        <div class="diff-num">03</div>
+        <h3>Scalable Systems</h3>
+        <p>We build advertising infrastructure that works at ₹50K/month and scales seamlessly to ₹50L/month.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <span class="section-label" style="color:var(--gold)">Join us</span>
+    <h2>Let's grow your brand <em>together.</em></h2>
+    <p>We work with a limited number of clients each month to maintain quality. Reserve your spot.</p>
+    <button class="btn-primary" onclick="showPage('appointments')" style="background:var(--gold);color:var(--brown-dark);">Book a Call →</button>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo">DEY <span>Marketing</span></span>
+        <p>Premium performance marketing for brands serious about profitable growth.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Meta Ads</a></li>
+          <li><a onclick="showPage('services')">Google Ads</a></li>
+          <li><a onclick="showPage('services')">Lead Generation</a></li>
+          <li><a onclick="showPage('services')">E-commerce Scaling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="socials">
+          <a class="social-link">in</a>
+          <a class="social-link">Li</a>
+          <a class="social-link">𝕏</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DEY Marketing. All rights reserved.</p>
+      <p>Made with precision.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════ CONTACT PAGE ══════════════════ -->
+<div id="page-contact" class="page">
+  <section class="contact-section">
+    <div class="contact-left">
+      <span class="section-label">Get In Touch</span>
+      <h1>Let's Work <em>Together.</em></h1>
+      <p>Tell us about your business and goals. We'll get back to you with a clear growth plan within 24 hours.</p>
+      <div class="contact-info-item">
+        <span class="icon">✉</span>
+        <span>hello@deymarketing.in</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="icon">📍</span>
+        <span>Pune, Maharashtra, India</span>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input id="cf-name" type="text" placeholder="Rohan Mehta"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input id="cf-email" type="email" placeholder="rohan@company.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input id="cf-business" type="text" placeholder="Your Company Pvt Ltd"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Monthly Ad Budget</label>
+          <select id="cf-budget">
+            <option value="">Select Budget</option>
+            <option>Under ₹50,000</option>
+            <option>₹50K – ₹2L</option>
+            <option>₹2L – ₹5L</option>
+            <option>₹5L – ₹10L</option>
+            <option>₹10L+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Services Needed</label>
+          <select id="cf-service">
+            <option value="">Select Service</option>
+            <option>Meta Ads</option>
+            <option>Google Ads</option>
+            <option>Lead Generation</option>
+            <option>E-commerce Scaling</option>
+            <option>Full Management</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Message</label>
+        <textarea id="cf-message" placeholder="Tell us about your business, your goals, and any challenges you're facing…"></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitContact()" style="width:100%;justify-content:center;font-size:15px">Get My Growth Plan →</button>
+      <p class="form-note">⏱ We respond within 24 hours</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo">DEY <span>Marketing</span></span>
+        <p>Premium performance marketing for brands serious about profitable growth.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Meta Ads</a></li>
+          <li><a onclick="showPage('services')">Google Ads</a></li>
+          <li><a onclick="showPage('services')">Lead Generation</a></li>
+          <li><a onclick="showPage('services')">E-commerce Scaling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="socials">
+          <a class="social-link">in</a>
+          <a class="social-link">Li</a>
+          <a class="social-link">𝕏</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DEY Marketing. All rights reserved.</p>
+      <p>Made with precision.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════ APPOINTMENTS PAGE ══════════════════ -->
+<div id="page-appointments" class="page">
+  <section class="appt-section">
+    <div class="appt-left">
+      <span class="section-label">Book a Call</span>
+      <h1>Book a <em>Strategy</em> Call.</h1>
+      <p>Schedule a free 30-minute call to discuss your growth strategy. No fluff — just a focused conversation about your goals and how we can get you there.</p>
+      <ul class="appt-bullets">
+        <li>
+          <span class="bul-icon">🔍</span>
+          <div>
+            <strong style="display:block;font-size:14px;color:var(--brown-dark);margin-bottom:2px">Campaign Audit</strong>
+            <span style="font-size:13px">We'll review your current ads and identify quick wins.</span>
+          </div>
+        </li>
+        <li>
+          <span class="bul-icon">🗺</span>
+          <div>
+            <strong style="display:block;font-size:14px;color:var(--brown-dark);margin-bottom:2px">Growth Roadmap</strong>
+            <span style="font-size:13px">A personalised 90-day plan built around your revenue goals.</span>
+          </div>
+        </li>
+        <li>
+          <span class="bul-icon">💬</span>
+          <div>
+            <strong style="display:block;font-size:14px;color:var(--brown-dark);margin-bottom:2px">Open Q&A</strong>
+            <span style="font-size:13px">Ask us anything about Meta, Google, or performance marketing.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Calendar Widget -->
+    <div class="calendly-placeholder">
+      <div class="cal-header">
+        <h3>Schedule Your Call</h3>
+        <p>30 min · Video Call · Free</p>
+      </div>
+      <div class="cal-body">
+        <div class="cal-month-nav">
+          <button class="cal-nav-btn" onclick="prevMonth()">‹</button>
+          <span id="cal-month-label">May 2026</span>
+          <button class="cal-nav-btn" onclick="nextMonth()">›</button>
+        </div>
+        <div class="cal-grid-header">
+          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-times" id="cal-times" style="display:none">
+          <h4>Available Times</h4>
+          <div class="time-slots">
+            <div class="time-slot" onclick="selectTime(this)">10:00 AM</div>
+            <div class="time-slot" onclick="selectTime(this)">11:00 AM</div>
+            <div class="time-slot" onclick="selectTime(this)">12:00 PM</div>
+            <div class="time-slot" onclick="selectTime(this)">2:00 PM</div>
+            <div class="time-slot" onclick="selectTime(this)">3:00 PM</div>
+            <div class="time-slot" onclick="selectTime(this)">4:00 PM</div>
+          </div>
+          <button class="btn-primary cal-confirm" id="cal-confirm-btn" style="display:none;margin-top:20px;width:100%;justify-content:center" onclick="confirmBooking()">Confirm Booking →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo">DEY <span>Marketing</span></span>
+        <p>Premium performance marketing for brands serious about profitable growth.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Meta Ads</a></li>
+          <li><a onclick="showPage('services')">Google Ads</a></li>
+          <li><a onclick="showPage('services')">Lead Generation</a></li>
+          <li><a onclick="showPage('services')">E-commerce Scaling</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="socials">
+          <a class="social-link">in</a>
+          <a class="social-link">Li</a>
+          <a class="social-link">𝕏</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DEY Marketing. All rights reserved.</p>
+      <p>Made with precision.</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ─── DYNAMIC DATE (morning briefing) ───
+  (function() {
+    const now = new Date();
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const dayEl = document.getElementById('briefing-day');
+    const dateEl = document.getElementById('briefing-date');
+    if (dayEl) dayEl.textContent = days[now.getDay()];
+    if (dateEl) dateEl.textContent = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  })();
+
+  // ─── PAGE NAVIGATION ───
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(initFadeIns, 100);
+    }
+  }
+
+  // ─── SCROLL FADE INS ───
+  function initFadeIns() {
+    const els = document.querySelectorAll('.page.active .fade-in');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(el => obs.observe(el));
+  }
+
+  initFadeIns();
+
+  // ─── CONTACT FORM ───
+  async function submitContact() {
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const business = document.getElementById('cf-business').value.trim();
+    const budget = document.getElementById('cf-budget').value;
+    const service = document.getElementById('cf-service').value;
+    const msg = document.getElementById('cf-message').value.trim();
+
+    if (!name || !email || !msg) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    const message = [
+      business ? 'Business: ' + business : '',
+      budget ? 'Budget: ' + budget : '',
+      service ? 'Service: ' + service : '',
+      '',
+      msg
+    ].filter(Boolean).join('\n');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Message sent! We'll get back to you within 24 hours.");
+        document.getElementById('cf-name').value = '';
+        document.getElementById('cf-email').value = '';
+        document.getElementById('cf-business').value = '';
+        document.getElementById('cf-budget').value = '';
+        document.getElementById('cf-service').value = '';
+        document.getElementById('cf-message').value = '';
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (e) {
+      alert('Something went wrong. Please try again.');
+    }
+  }
+
+  // ─── CALENDAR ───
+  let calYear = 2026, calMonth = 4;
+  let selectedDay = null, selectedTime = null;
+
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function renderCal() {
+    document.getElementById('cal-month-label').textContent = monthNames[calMonth] + ' ' + calYear;
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const today = new Date();
+
+    for (let i = 0; i < firstDay; i++) {
+      const d = document.createElement('div');
+      d.className = 'cal-day empty'; grid.appendChild(d);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement('div');
+      const date = new Date(calYear, calMonth, d);
+      const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      el.className = 'cal-day' + (isPast || isWeekend ? ' past' : ' available');
+      if (d === selectedDay && !isPast && !isWeekend) el.classList.add('selected');
+      el.textContent = d;
+      if (!isPast && !isWeekend) {
+        el.onclick = () => {
+          selectedDay = d;
+          selectedTime = null;
+          document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+          document.getElementById('cal-confirm-btn').style.display = 'none';
+          renderCal();
+          document.getElementById('cal-times').style.display = 'block';
+        };
+      }
+      grid.appendChild(el);
+    }
+  }
+
+  function prevMonth() {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    selectedDay = null; selectedTime = null;
+    document.getElementById('cal-times').style.display = 'none';
+    renderCal();
+  }
+
+  function nextMonth() {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    selectedDay = null; selectedTime = null;
+    document.getElementById('cal-times').style.display = 'none';
+    renderCal();
+  }
+
+  function selectTime(el) {
+    document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTime = el.textContent;
+    document.getElementById('cal-confirm-btn').style.display = 'flex';
+  }
+
+  function confirmBooking() {
+    alert('Call booked!\n\n' + monthNames[calMonth] + ' ' + selectedDay + ', ' + calYear + ' at ' + selectedTime + "\n\nWe'll send a confirmation to your email shortly. Looking forward to speaking with you!");
+  }
+
+  renderCal();
+</script>
 </body>
 </html>
