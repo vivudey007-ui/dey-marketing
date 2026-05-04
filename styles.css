@@ -37,6 +37,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 html, body {
   font-family: var(--font-sans);
   color: var(--ink-1);
@@ -44,17 +49,28 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9InBnIiBjeD0iMzglIiBjeT0iMzIlIiByPSI2MCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2YwZThkOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2I4OTk2OCIvPjwvcmFkaWFsR3JhZGllbnQ+PHJhZGlhbEdyYWRpZW50IGlkPSJoZyIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iMzglIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSJ3aGl0ZSIgc3RvcC1vcGFjaXR5PSIwLjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0idXJsKCNwZykiLz48ZWxsaXBzZSBjeD0iOSIgY3k9IjguNSIgcng9IjQuNSIgcnk9IjMuNSIgZmlsbD0idXJsKCNoZykiLz48L3N2Zz4=") 12 12, auto;
 }
 
 body {
+  background: linear-gradient(180deg, #ede4d3 0%, #e0d2b9 60%, #d4c4a8 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Fixed background layer — GPU-promoted, never repaints on scroll */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(ellipse at 20% 10%, rgba(245, 239, 228, 0.85) 0%, transparent 55%),
     radial-gradient(ellipse at 90% 90%, rgba(184, 153, 104, 0.18) 0%, transparent 55%),
     linear-gradient(180deg, #ede4d3 0%, #e0d2b9 60%, #d4c4a8 100%);
-  background-attachment: fixed;
-  min-height: 100vh;
-  position: relative;
+  will-change: transform;
 }
 
 /* Subtle grain texture overlay */
@@ -64,9 +80,9 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.35;
+  opacity: 0.18;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  mix-blend-mode: multiply;
+  will-change: transform;
 }
 
 #app { position: relative; z-index: 2; }
@@ -500,6 +516,8 @@ section { position: relative; padding: 100px 0; }
   opacity: 0.5;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Marquee / proof */
@@ -1615,8 +1633,13 @@ footer {
   .mobile-drawer .m-link { font-size: 30px; padding: 12px 0; }
   .mobile-drawer .close-mob { top: 18px; right: 18px; }
 
-  /* Reduce ambient blob intensity on mobile */
-  .ambient-blob { opacity: 0.3 !important; filter: blur(80px); }
+  /* Disable expensive effects on mobile for smooth scrolling */
+  .ambient-blob { opacity: 0 !important; }
+  body::before { display: none; }
+  .nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(245, 239, 228, 0.97); }
+  .service-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .appt-card, .contact-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .mobile-drawer { backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 
 /* Extra-small phones */
