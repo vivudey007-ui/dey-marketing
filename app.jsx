@@ -163,7 +163,7 @@ function Footer({ onNav }) {
               <span className="mini-orb"></span>
               DEY <em style={{ fontStyle: 'italic', color: '#8d7048' }}>Marketing</em>
             </div>
-            <p>Strategy. Creative. Growth. We build performance ad systems that turn clicks into customers — for ambitious brands ready to scale.</p>
+            <p>Ads that bring people in. Websites that convert them. We build the full online presence for brands ready to grow.</p>
           </div>
           <div className="footer-col">
             <h5>Navigate</h5>
@@ -175,10 +175,8 @@ function Footer({ onNav }) {
           </div>
           <div className="footer-col">
             <h5>Services</h5>
-            <a>Meta Ads</a>
-            <a>Google Ads</a>
-            <a>Lead Generation</a>
-            <a>E-commerce Scaling</a>
+            <a onClick={() => onNav('services')}>Meta Ads</a>
+            <a onClick={() => onNav('services')}>Web Design</a>
           </div>
           <div className="footer-col">
             <h5>Connect</h5>
@@ -209,12 +207,12 @@ function Home({ onNav }) {
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="hero-grid">
             <div>
-              <div className="eyebrow reveal in">Performance Ads Agency</div>
+              <div className="eyebrow reveal in">Ads · Web Design · Growth</div>
               <h1 style={{ marginTop: 24 }} className="reveal in">
-                We run <span className="accent">high-converting</span> ad campaigns that turn clicks into customers.
+                We build your <span className="accent">complete online presence</span> — ads that convert and websites that close.
               </h1>
               <p className="hero-sub reveal">
-                At DEY Marketing, we help ambitious brands scale profitably using data-driven Meta and Google ad strategies — engineered for ROI, not vanity metrics.
+                At DEY Marketing, we run high-performance Meta ad campaigns and build sharp, fast websites for brands ready to grow — handled end to end, so you don't have to.
               </p>
               <div className="hero-ctas reveal">
                 <button className="btn btn-gold" onClick={() => onNav('appointments')}>
@@ -274,15 +272,13 @@ function Home({ onNav }) {
         <div className="container">
           <div className="section-head reveal">
             <div className="eyebrow">Our Services</div>
-            <h2 style={{ marginTop: 18 }}>Everything you need to <em>scale profitably</em>.</h2>
-            <p>Four specialized practice areas, one obsession: predictable revenue from paid acquisition.</p>
+            <h2 style={{ marginTop: 18 }}>Everything you need to <em>grow online</em>.</h2>
+            <p>Two focused practices. Ads that convert and websites that close.</p>
           </div>
           <div className="services-grid">
             {[
-              { num: '01', title: 'Meta Ads', desc: 'Facebook & Instagram campaigns engineered for full-funnel performance.', shape: '' },
-              { num: '02', title: 'Google Ads', desc: 'Capture high-intent buyers actively searching for what you sell.', shape: 'shape-cube' },
-              { num: '03', title: 'Lead Generation', desc: 'Consistent, qualified pipeline — built around your sales motion.', shape: 'shape-torus' },
-              { num: '04', title: 'E-commerce Scaling', desc: 'Profitable growth systems for DTC brands ready for the next level.', shape: 'shape-pill' },
+              { num: '01', title: 'Meta Ads', desc: 'Facebook & Instagram campaigns engineered for full-funnel performance — creatives, targeting, and ROAS, handled end to end.', shape: '' },
+              { num: '02', title: 'Web Design', desc: 'Fast, branded websites and landing pages built to look sharp and convert — deployed in days, not months.', shape: 'shape-cube' },
             ].map((s, i) => (
               <div key={i} className="service-card reveal" onClick={() => onNav('services')}
                 onMouseMove={(e) => {
@@ -388,28 +384,16 @@ function Services({ onNav }) {
   useReveal();
   const services = [
     {
-      num: '01 / 04',
+      num: '01 / 02',
       title: 'Meta Ads',
-      desc: 'We create high-converting Facebook and Instagram campaigns that turn attention into revenue. Full-funnel architecture, daily creative testing, and creative-led iteration — built for performance.',
-      bullets: ['Full-funnel campaign architecture', 'UGC + studio creative production', 'Pixel & Conversions API setup', 'Daily testing & budget reallocation'],
+      desc: 'We create high-converting Facebook and Instagram campaigns that turn attention into revenue. Full-funnel architecture, daily creative testing, and creative-led iteration — built for performance, not vanity metrics.',
+      bullets: ['Full-funnel campaign architecture', 'Ad creatives designed and built by us', 'Pixel & Conversions API setup', 'Daily optimisation & budget reallocation'],
     },
     {
-      num: '02 / 04',
-      title: 'Google Ads',
-      desc: 'Capture high-intent customers actively searching for your business. Search, Performance Max, YouTube — we build Google ecosystems that compound.',
-      bullets: ['Search & Performance Max campaigns', 'Keyword research & negative lists', 'Landing page optimization', 'Bid strategy & budget pacing'],
-    },
-    {
-      num: '03 / 04',
-      title: 'Lead Generation',
-      desc: 'Consistent, qualified leads engineered around your sales motion. We build the lead system, not just the ads.',
-      bullets: ['Offer & funnel architecture', 'Form optimization & lead scoring', 'CRM + automation integration', 'Weekly pipeline reporting'],
-    },
-    {
-      num: '04 / 04',
-      title: 'E-commerce Scaling',
-      desc: 'Scale your online store profitably with creative-led, data-driven systems. From ₹5L/mo to ₹50L/mo — engineered for margin.',
-      bullets: ['Catalog & feed optimization', 'Lifecycle email + SMS', 'Creative testing pods', 'Margin-first scaling playbook'],
+      num: '02 / 02',
+      title: 'Web Design',
+      desc: 'Sharp, fast, branded websites and landing pages — built from scratch, deployed in days. Designed to look great and built to convert, whether it\'s a landing page for your ad or a full business website.',
+      bullets: ['Custom design — no templates', 'Mobile-first, lightning-fast', 'Connected to your ad funnel', 'Deployed and live within days'],
     },
   ];
   return (
@@ -421,7 +405,7 @@ function Services({ onNav }) {
             Built for <em>brands that scale.</em>
           </h1>
           <p className="lede reveal in">
-            Four specialized practices. One performance philosophy. Pick what you need — we'll build it like it's our own brand on the line.
+            Two focused practices. One performance philosophy. Ads that bring people in, websites that convert them.
           </p>
         </div>
       </section>
