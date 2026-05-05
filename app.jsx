@@ -497,10 +497,10 @@ function About({ onNav }) {
           <div className="section-head reveal" style={{ maxWidth: 820 }}>
             <div className="eyebrow">Our Mission</div>
             <h2 style={{ marginTop: 18 }}>
-              We help brands grow <em>profitably</em> — through systems, not guesswork.
+              We build your brand online — <em>ads and the website</em> to back them up.
             </h2>
             <p style={{ marginTop: 24, fontSize: 18, lineHeight: 1.6 }}>
-              Most agencies celebrate impressions. We celebrate margin. DEY was founded on the belief that paid media should pay for itself — and then some. That means understanding your unit economics before we touch a single ad set, and reporting on what actually moves your business: contribution margin, payback period, LTV.
+              Most agencies run your ads and send traffic to a website that doesn't convert. We fix both. DEY was built around the idea that ads and web design have to work together — great traffic means nothing if your website loses people the moment they land. So we handle both: campaigns that bring the right people in, and websites built to turn them into customers.
             </p>
           </div>
         </div>
@@ -510,13 +510,13 @@ function About({ onNav }) {
         <div className="container">
           <div className="section-head reveal">
             <div className="eyebrow">What Makes Us Different</div>
-            <h2 style={{ marginTop: 18 }}>Three things we won't compromise on.</h2>
+            <h2 style={{ marginTop: 18 }}>What we actually do differently.</h2>
           </div>
           <div className="values-grid">
             {[
-              { t: 'Data-first approach', d: 'Every decision starts with numbers. We build dashboards before we build campaigns, and let attribution drive strategy.', cls: 'v-1' },
-              { t: 'ROI over vanity', d: 'We don\'t care about reach if reach doesn\'t pay. Margin is our north star — yours should be too.', cls: 'v-2' },
-              { t: 'Scalable systems', d: 'Random creative wins fade. Systems compound. We build playbooks your team can run for years.', cls: 'v-3' },
+              { t: 'Ads that actually convert', d: 'We build full-funnel Meta campaigns — creatives, targeting, copy, and daily optimisation. Not just set-and-forget.', cls: 'v-1' },
+              { t: 'Websites built for growth', d: 'We design and build fast, branded websites that are connected to your ad funnel from day one — not an afterthought.', cls: 'v-2' },
+              { t: 'Everything under one roof', d: 'No juggling three agencies. We handle ads and web design together, so your brand stays consistent and nothing slips through the cracks.', cls: 'v-3' },
             ].map((v, i) => (
               <div key={i} className={`value-card ${v.cls} reveal`}>
                 <div className="icon-3d"></div>
