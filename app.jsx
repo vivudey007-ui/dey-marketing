@@ -2,22 +2,36 @@
 
 const { useState, useEffect, useRef, useMemo } = React;
 
-// ---------- Reveal-on-scroll hook (GSAP-powered) ----------
+// ---------- Reveal-on-scroll hook (GSAP, sibling-stagger) ----------
 function useReveal() {
   useEffect(() => {
     if (window.gsap && window.ScrollTrigger) {
       const triggers = [];
-      document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
-        gsap.set(el, { opacity: 0, y: 26, willChange: 'transform,opacity' });
+      const unrevd = document.querySelectorAll('.reveal:not(.in)');
+
+      // Group siblings sharing the same direct parent
+      const groups = new Map();
+      unrevd.forEach((el) => {
+        const p = el.parentElement;
+        if (!groups.has(p)) groups.set(p, []);
+        groups.get(p).push(el);
+      });
+
+      groups.forEach((els, parent) => {
+        gsap.set(els, { opacity: 0, y: 32, willChange: 'transform,opacity' });
         const t = ScrollTrigger.create({
-          trigger: el, start: 'top 90%', once: true,
+          trigger: parent, start: 'top 88%', once: true,
           onEnter() {
-            gsap.to(el, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' });
-            el.classList.add('in');
+            gsap.to(els, {
+              opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+              stagger: els.length > 1 ? 0.1 : 0,
+            });
+            els.forEach((el) => el.classList.add('in'));
           },
         });
         triggers.push(t);
       });
+
       ScrollTrigger.refresh();
       return () => triggers.forEach((t) => t.kill());
     }
@@ -41,36 +55,95 @@ function usePageEnter() {
   }, []);
 }
 
+// ---------- Section parallax ----------
+function useParallax() {
+  useEffect(() => {
+    if (!window.gsap || !window.ScrollTrigger) return;
+    const kills = [];
+
+    // Section heads drift gently upward
+    document.querySelectorAll('.section-head').forEach((el) => {
+      const t = gsap.fromTo(el, { y: 36 }, { y: -18, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.8 },
+      });
+      kills.push(t.scrollTrigger);
+    });
+
+    // Proof cells — staggered y offset
+    document.querySelectorAll('.proof-cell').forEach((el, i) => {
+      const t = gsap.fromTo(el, { y: 20 + i * 6 }, { y: 0, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'center center', scrub: 1.2 },
+      });
+      kills.push(t.scrollTrigger);
+    });
+
+    // Ambient blobs follow scroll at different speeds
+    document.querySelectorAll('.ambient-blob').forEach((el, i) => {
+      const dir = i % 2 === 0 ? -1 : 1;
+      const t = gsap.to(el, { y: dir * 80, ease: 'none',
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 },
+      });
+      kills.push(t.scrollTrigger);
+    });
+
+    return () => kills.forEach((t) => t && t.kill());
+  }, []);
+}
+
+// ---------- Marquee ----------
+function Marquee() {
+  const text = 'Meta Ads  ·  Web Design  ·  Brand Growth  ·  Performance Marketing  ·  Creative Strategy  ·  ROAS Focused  ·  ';
+  return (
+    <div className="dey-marquee">
+      <div className="dey-marquee-track">
+        <span>{text}</span><span>{text}</span>
+      </div>
+    </div>
+  );
+}
+
 // ---------- Hero Background Image ----------
 function HeroBg() {
-  const ref = useRef(null);
+  const imgRef = useRef(null);
+  const wrapRef = useRef(null);
   useEffect(() => {
-    let mx = 0, my = 0;
+    if (!imgRef.current) return;
+
+    // Mouse tilt on wrapper (separate from GSAP y)
     const onMove = (e) => {
-      mx = (e.clientX / window.innerWidth - 0.5) * 18;
-      my = (e.clientY / window.innerHeight - 0.5) * -12;
-      apply();
-    };
-    const onScroll = () => apply();
-    const apply = () => {
-      if (!ref.current) return;
-      const sy = window.scrollY;
-      ref.current.style.transform = `translateY(${sy * 0.35}px) rotateY(${mx}deg) rotateX(${my}deg)`;
+      if (!wrapRef.current) return;
+      const rx = (e.clientX / window.innerWidth - 0.5) * 12;
+      const ry = (e.clientY / window.innerHeight - 0.5) * -8;
+      wrapRef.current.style.transform = `perspective(1200px) rotateY(${rx}deg) rotateX(${ry}deg)`;
     };
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // GSAP scroll parallax — image drifts down as hero exits
+    let st;
+    if (window.gsap && window.ScrollTrigger) {
+      st = gsap.to(imgRef.current, {
+        y: '42%', ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 },
+      });
+      // Hero text counter-drifts upward (depth illusion)
+      gsap.to('.hero-grid', {
+        y: '-12%', ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 },
+      });
+    }
     return () => {
       window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('scroll', onScroll);
+      if (st && st.scrollTrigger) st.scrollTrigger.kill();
     };
   }, []);
   return (
-    <div style={{
+    <div ref={wrapRef} style={{
       position: 'absolute', inset: 0, overflow: 'hidden',
-      perspective: '1200px', zIndex: 0, pointerEvents: 'none',
+      zIndex: 0, pointerEvents: 'none',
+      transition: 'transform 0.16s ease-out', willChange: 'transform',
     }}>
       <img
-        ref={ref}
+        ref={imgRef}
         src="assets/design-hero.png"
         alt=""
         style={{
@@ -216,6 +289,7 @@ function Footer({ onNav }) {
 function Home({ onNav }) {
   useReveal();
   usePageEnter();
+  useParallax();
   return (
     <div className="page">
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -262,6 +336,8 @@ function Home({ onNav }) {
         </div>
       </section>
 
+      <Marquee />
+
       {/* Social proof */}
       <section className="proof" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -303,8 +379,14 @@ function Home({ onNav }) {
               <div key={i} className="service-card reveal" onClick={() => onNav('services')}
                 onMouseMove={(e) => {
                   const r = e.currentTarget.getBoundingClientRect();
+                  const xp = (e.clientX - r.left) / r.width - 0.5;
+                  const yp = (e.clientY - r.top) / r.height - 0.5;
+                  e.currentTarget.style.transform = `perspective(900px) rotateY(${xp * 10}deg) rotateX(${-yp * 7}deg) translateY(-4px) translateZ(8px)`;
                   e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
                   e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = '';
                 }}>
                 <div className={`service-3d ${s.shape}`}></div>
                 <div className="num">{s.num}</div>

@@ -1851,6 +1851,39 @@ body[data-form="geometric"] .ambient-blob { border-radius: 18% !important; }
   }
 }
 
+/* ── MARQUEE BAND ── */
+.dey-marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  background: rgba(184, 153, 104, 0.05);
+  user-select: none;
+}
+.dey-marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: dey-marquee 28s linear infinite;
+  will-change: transform;
+}
+.dey-marquee-track span {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  padding-right: 0;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+@keyframes dey-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SERVICE CARD — transition specific props so tilt is immediate ── */
+.service-card { transition: box-shadow 0.5s var(--ease), border-color 0.4s var(--ease), background 0.4s; }
+
 /* ── CURSOR RING + LABEL ── */
 #dey-cursor-ring {
   position: fixed; left: 0; top: 0; pointer-events: none; z-index: 99995;
