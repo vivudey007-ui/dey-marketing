@@ -1850,3 +1850,35 @@ body[data-form="geometric"] .ambient-blob { border-radius: 18% !important; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── CURSOR RING + LABEL ── */
+#dey-cursor-ring {
+  position: fixed; left: 0; top: 0; pointer-events: none; z-index: 99995;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(184, 153, 104, 0.45);
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, opacity 0.3s;
+  opacity: 0.5;
+  will-change: transform;
+}
+#dey-cursor-ring.cursor-hover {
+  transform: translate(-50%, -50%) scale(2.1);
+  border-color: rgba(184, 153, 104, 0.85);
+  opacity: 0.9;
+}
+#dey-cursor-label {
+  position: fixed; left: 0; top: 0; pointer-events: none; z-index: 99996;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink-2); white-space: nowrap;
+  transform: translate(-50%, 26px);
+  opacity: 0; transition: opacity 0.2s;
+}
+#dey-cursor-label.visible { opacity: 1; }
+
+/* ── PAGE ENTRANCE ── */
+.page { opacity: 1; }
+
+@media (pointer: coarse) {
+  #dey-cursor-ring, #dey-cursor-label { display: none; }
+}

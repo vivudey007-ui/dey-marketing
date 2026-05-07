@@ -2,24 +2,43 @@
 
 const { useState, useEffect, useRef, useMemo } = React;
 
-// ---------- Reveal-on-scroll hook ----------
+// ---------- Reveal-on-scroll hook (GSAP-powered) ----------
 function useReveal() {
   useEffect(() => {
+    if (window.gsap && window.ScrollTrigger) {
+      const triggers = [];
+      document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
+        gsap.set(el, { opacity: 0, y: 26, willChange: 'transform,opacity' });
+        const t = ScrollTrigger.create({
+          trigger: el, start: 'top 90%', once: true,
+          onEnter() {
+            gsap.to(el, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' });
+            el.classList.add('in');
+          },
+        });
+        triggers.push(t);
+      });
+      ScrollTrigger.refresh();
+      return () => triggers.forEach((t) => t.kill());
+    }
+    // fallback: IntersectionObserver
     const els = document.querySelectorAll('.reveal:not(.in)');
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        });
-      },
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); },
       { threshold: 0.15 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   });
+}
+
+// ---------- Page enter animation ----------
+function usePageEnter() {
+  useEffect(() => {
+    if (!window.gsap) return;
+    gsap.fromTo('.page', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' });
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }, []);
 }
 
 // ---------- Hero Background Image ----------
@@ -196,6 +215,7 @@ function Footer({ onNav }) {
 // ---------- HOME ----------
 function Home({ onNav }) {
   useReveal();
+  usePageEnter();
   return (
     <div className="page">
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -382,6 +402,7 @@ function Home({ onNav }) {
 // ---------- SERVICES ----------
 function Services({ onNav }) {
   useReveal();
+  usePageEnter();
   const services = [
     {
       num: '01 / 02',
@@ -459,6 +480,7 @@ function Services({ onNav }) {
 // ---------- ABOUT ----------
 function About({ onNav }) {
   useReveal();
+  usePageEnter();
   return (
     <div className="page">
       <section className="page-header">
@@ -553,6 +575,7 @@ function About({ onNav }) {
 // ---------- CONTACT ----------
 function Contact({ onNav }) {
   useReveal();
+  usePageEnter();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -676,6 +699,7 @@ function Contact({ onNav }) {
 // ---------- APPOINTMENTS ----------
 function Appointments({ onNav }) {
   useReveal();
+  usePageEnter();
 
   useEffect(() => {
     if (window.Calendly) {
@@ -781,6 +805,7 @@ function App() {
   const onNav = (p) => {
     setPage(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 120);
   };
 
   // Apply tweak modes to body
@@ -801,6 +826,57 @@ function App() {
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
+
+  // Cursor ring + laggy follow
+  useEffect(() => {
+    if ('ontouchstart' in window) return;
+    const ring = document.createElement('div');
+    ring.id = 'dey-cursor-ring';
+    const lbl = document.createElement('div');
+    lbl.id = 'dey-cursor-label';
+    document.body.appendChild(ring);
+    document.body.appendChild(lbl);
+
+    let mx = 0, my = 0, rx = 0, ry = 0, raf;
+    const onMove = (e) => { mx = e.clientX; my = e.clientY; };
+    window.addEventListener('mousemove', onMove);
+    (function loop() {
+      rx += (mx - rx) * 0.08; ry += (my - ry) * 0.08;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      lbl.style.left = rx + 'px'; lbl.style.top = ry + 'px';
+      raf = requestAnimationFrame(loop);
+    })();
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(raf);
+      ring.remove(); lbl.remove();
+    };
+  }, []);
+
+  // Cursor hover labels (re-bound on page change)
+  useEffect(() => {
+    const ring = document.getElementById('dey-cursor-ring');
+    const lbl = document.getElementById('dey-cursor-label');
+    if (!ring || !lbl) return;
+    const map = [
+      ['.btn-gold,.btn-primary,.nav-cta', 'BOOK NOW'],
+      ['.service-card', 'EXPLORE'],
+      ['.testimonial', 'READ'],
+      ['.btn-ghost', 'LEARN MORE'],
+      ['.nav-link', 'GO'],
+      ['.footer-brand', 'HOME'],
+    ];
+    const set = (on, text) => {
+      ring.classList.toggle('cursor-hover', on);
+      lbl.textContent = text || '';
+      lbl.classList.toggle('visible', on && !!text);
+    };
+    const over = (e) => { for (const [sel, t] of map) { if (e.target.closest(sel)) { set(true, t); return; } } };
+    const out  = (e) => { for (const [sel]    of map) { if (e.target.closest(sel)) { set(false, ''); return; } } };
+    document.addEventListener('mouseover', over);
+    document.addEventListener('mouseout', out);
+    return () => { document.removeEventListener('mouseover', over); document.removeEventListener('mouseout', out); };
+  }, [page]);
 
   return (
     <>
