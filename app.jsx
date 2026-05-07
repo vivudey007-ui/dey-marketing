@@ -445,14 +445,10 @@ function WorkScene() {
   const ref = useRef(null);
   const p = useSceneProgress(ref);
   const works = [
-    { img: W_ASCEND,  kind: 'Web Design · Sports',     name: 'Ascend Arena',    loc: 'Pune · 2025',     metric: 'FIFA-approved turf' },
-    { img: W_LOOM,    kind: 'Performance · Fashion',   name: 'Loom & Linen',    loc: 'Mumbai · 2024',   metric: '5.2× ROAS' },
-    { img: W_VERDE,   kind: 'Performance · Wellness',  name: 'Verde Wellness',  loc: 'Mumbai · 2024',   metric: 'Full funnel build' },
-    { img: W_SAANVI,  kind: 'Performance · Beauty',    name: 'Saanvi Studios',  loc: 'Mumbai · 2024',   metric: '₹10L+ spend managed' },
-    { img: W_D2C,     kind: 'Web Design · D2C',        name: 'Client Brand',    loc: 'India · 2025',    metric: 'Custom landing page' },
+    { img: W_ASCEND, kind: 'Web Design · Sports', name: 'Ascend Arena', loc: 'Pune · 2025', metric: 'FIFA-approved turf' },
   ];
   const enter = Math.min(1, p * 1.5);
-  const trackX = -(p) * 1600;
+  const trackX = 0;
   return (
     <section ref={ref} id="work" className="scene scene-tall scene-work">
       <div className="scene-pin">
@@ -488,9 +484,8 @@ function TestsScene() {
   const p = useSceneProgress(ref);
   const enter = Math.min(1, p * 2);
   const tests = [
-    { q: 'DEY rebuilt our acquisition engine from the ground up. ROAS went from 1.8× to 5.2× in three months.', who: 'Aanya Mehra', role: 'Founder · Loom & Linen', initials: 'AM' },
-    { q: "They obsess over numbers the way we obsess over product. That's rare. That's why we stayed.", who: 'Vikram Shah', role: 'CMO · Verde Wellness', initials: 'VS' },
-    { q: 'The first agency that actually understood our margin structure before suggesting spend.', who: 'Priya Nair', role: 'Director · Saanvi Studios', initials: 'PN' },
+    { q: 'DEY took our FIFA-approved turf concept and turned it into a real brand online. The website, the ads — everything looked premium from day one. Bookings came in before we even officially launched.', who: 'Ishan', role: 'Co-founder · Ascend Arena', initials: 'I' },
+    { q: 'We needed something that matched the quality of our facility. DEY delivered exactly that — a website that looks world-class and campaigns that actually fill our slots. Best decision we made for the business.', who: 'Siddhant', role: 'Co-founder · Ascend Arena', initials: 'S' },
   ];
   return (
     <section ref={ref} className="scene scene-tests">
