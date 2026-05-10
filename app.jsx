@@ -54,7 +54,7 @@ function useSmoothScroll(enabled) {
     const lerp = (a, b, t) => a + (b - a) * t;
 
     const tick = () => {
-      current = lerp(current, target, 0.09);
+      current = lerp(current, target, 0.065);
       if (Math.abs(target - current) < 0.1) current = target;
       window.scrollTo(0, current);
       window.dispatchEvent(new CustomEvent('smoothscroll'));
@@ -440,38 +440,94 @@ function ProcessScene() {
   );
 }
 
-/* ============== WORK (horizontal gallery) ============== */
+/* ============== WHAT WE BUILD ============== */
 function WorkScene() {
   const ref = useRef(null);
   const p = useSceneProgress(ref);
-  const works = [
-    { img: W_ASCEND, kind: 'Web Design · Sports', name: 'Ascend Arena', loc: 'Pune · 2025', metric: 'FIFA-approved turf' },
-  ];
   const enter = Math.min(1, p * 1.5);
-  const trackX = 0;
+  const caps = [
+    {
+      num: '01',
+      label: 'Meta & Google Ads',
+      body: 'We don\'t just run ads. We build full-funnel campaigns — audience research, creative strategy, copy, testing, and daily optimisation. Every rupee is tracked.',
+      tag: 'Performance Marketing',
+    },
+    {
+      num: '02',
+      label: 'Web Design & Landing Pages',
+      body: 'Most agencies send your ad traffic to a website that doesn\'t convert. We fix both ends. We design and build fast, sharp websites that turn clicks into customers.',
+      tag: 'Web Design',
+    },
+    {
+      num: '03',
+      label: 'Full-Funnel Growth',
+      body: 'Ads and website working together — that\'s when growth compounds. We handle the complete online presence so you don\'t have to stitch it together yourself.',
+      tag: 'End-to-End',
+    },
+  ];
   return (
     <section ref={ref} id="work" className="scene scene-tall scene-work">
       <div className="scene-pin">
         <div className="work-head" style={{ opacity: enter }}>
           <div>
-            <span className="eyebrow">Selected Work · 04</span>
-            <h2>Recent <em>builds</em>.</h2>
+            <span className="eyebrow">What We Do · 04</span>
+            <h2>We build the <em>whole thing</em>.</h2>
           </div>
-          <p style={{ maxWidth: 380, fontSize: 15, color: 'var(--ink-3)' }}>A slice of what we've shipped. Scroll →</p>
+          <p style={{ maxWidth: 380, fontSize: 15, color: 'var(--ink-3)' }}>Not just ads. Not just websites. Both — done right.</p>
         </div>
         <div className="work-track-wrap">
-          <div className="work-track" style={{ transform: `translateX(${trackX}px)` }}>
-            {works.map((w, i) => (
-              <div className="work-card" key={i}>
-                <div className="ph" style={{ backgroundImage: `url(${w.img})` }}></div>
-                <div className="meta">
-                  <span className="kind">{w.kind}</span>
-                  <div className="name">{w.name}</div>
-                  <div className="row"><span>{w.loc}</span><span style={{ color: 'var(--gold-light)' }}>{w.metric}</span></div>
+          <div className="work-track" style={{ transform: 'translateX(0)' }}>
+            { /* Real client work */ }
+            <div className="work-card">
+              <div className="ph" style={{ backgroundImage: `url(${W_ASCEND})` }}></div>
+              <div className="meta">
+                <span className="kind">Web Design · Sports</span>
+                <div className="name">Ascend Arena</div>
+                <div className="row"><span>Pune · 2025</span><span style={{ color: 'var(--gold-light)' }}>FIFA-approved turf</span></div>
+              </div>
+            </div>
+            { /* Capability cards */ }
+            {caps.map((c, i) => (
+              <div className="work-card cap-card" key={i}>
+                <div className="cap-num">{c.num}</div>
+                <div className="meta" style={{ padding: '32px 28px' }}>
+                  <span className="kind">{c.tag}</span>
+                  <div className="name" style={{ marginBottom: 14 }}>{c.label}</div>
+                  <p style={{ fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.75 }}>{c.body}</p>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============== VIDEO SCENE ============== */
+function VideoScene() {
+  const ref = useRef(null);
+  const vidRef = useRef(null);
+  const p = useSceneProgress(ref);
+  const enter = Math.min(1, p * 2);
+  const bgScale = 1 + p * 0.08;
+
+  /* sync video playback position to scroll progress */
+  useEffect(() => {
+    const vid = vidRef.current;
+    if (!vid || !vid.duration) return;
+    vid.currentTime = p * vid.duration;
+  }, [p]);
+
+  return (
+    <section ref={ref} className="scene scene-tall scene-video">
+      <div className="scene-pin">
+        <video ref={vidRef} className="vid-bg" src="assets/ascend-tunnel.mp4" muted playsInline preload="auto" style={{ transform: `scale(${bgScale})` }} />
+        <div className="vid-overlay"></div>
+        <div className="vid-inner" style={{ opacity: enter, transform: `translateY(${(1-enter)*50}px)` }}>
+          <span className="eyebrow">The Work · 05</span>
+          <h2>Every brand has a <em>story worth telling.</em></h2>
+          <p>We make sure the right people see it.</p>
         </div>
       </div>
     </section>
@@ -585,34 +641,45 @@ function Footer() {
   );
 }
 
-/* ============== CUSTOM CURSOR ============== */
+/* ============== PEARL CURSOR ============== */
 function Cursor({ enabled }) {
-  const ref = useRef(null);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
   useEffect(() => {
     if (!enabled) return;
-    const el = ref.current;
-    let visible = false;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    let mx=0, my=0, rx=0, ry=0, rafId;
     const onMove = (e) => {
-      if (!visible) { el.classList.add('visible'); visible = true; }
-      el.style.left = e.clientX + 'px';
-      el.style.top = e.clientY + 'px';
+      mx = e.clientX; my = e.clientY;
+      dot.classList.add('visible');
+      ring.classList.add('visible');
     };
     const onOver = (e) => {
-      if (e.target.closest('a,button,.bento-card,.work-card,.test')) el.classList.add('hover');
-      else el.classList.remove('hover');
+      if (e.target.closest('a,button,.bento-card,.work-card,.test,.proc-step,.nav-cta'))
+        ring.classList.add('pull');
+      else ring.classList.remove('pull');
     };
-    const onLeave = () => { el.classList.remove('visible'); visible = false; };
+    const onLeave = () => { dot.classList.remove('visible'); ring.classList.remove('visible'); };
+    const tick = () => {
+      rx += (mx - rx) * 0.10; ry += (my - ry) * 0.10;
+      dot.style.transform  = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+      ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+      rafId = requestAnimationFrame(tick);
+    };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseover', onOver);
     document.addEventListener('mouseleave', onLeave);
+    rafId = requestAnimationFrame(tick);
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseover', onOver);
       document.removeEventListener('mouseleave', onLeave);
     };
   }, [enabled]);
   if (!enabled) return null;
-  return <div ref={ref} className="cursor"></div>;
+  return (<><div ref={dotRef} className="cursor-dot"></div><div ref={ringRef} className="cursor-ring"></div></>);
 }
 
 /* ============== APP ============== */
@@ -636,6 +703,7 @@ function App() {
       <ParallaxScene />
       <ProcessScene />
       <WorkScene />
+      <VideoScene />
       <TestsScene />
       <CtaScene />
       <Footer />
